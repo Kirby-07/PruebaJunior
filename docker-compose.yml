@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    container_name: inventario-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    command: npm run dev
+
+  # El frontend lo descomentaremos cuando creemos el proyecto Angular en el Paso 3
+  # frontend:
+  #   build: 
+  #     context: ./frontend
+  #   container_name: inventario-frontend
+  #   ports:
+  #     - "4200:4200"
+  #   volumes:
+  #     - ./frontend:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   command: npm start

@@ -1,0 +1,60 @@
+# Sistema de Gestión de Inventario E-Commerce
+
+Este proyecto implementa el backend (Node.js/Express) y frontend (Angular) para la gestión del inventario de una plataforma de e-commerce, cumpliendo con los requerimientos de control de stock, alertas y mantenibilidad.
+
+## Setup y Despliegue (Entorno de Desarrollo)
+
+El proyecto está dockerizado para garantizar paridad entre entornos.
+
+1. Tener Docker y Docker Compose instalados.
+2. Ejecutar en la raíz del proyecto:
+   \`\`\`bash
+   docker-compose up --build
+   \`\`\`
+3. El backend estará disponible en \`http://localhost:3000\` y el frontend en \`http://localhost:4200\`.
+
+## 🏗️ Decisiones de Arquitectura (ADR)
+
+1. **Arquitectura por Capas (Separación de Responsabilidades):** Se adoptó un patrón Controller-Service-Repository (similar a Spring Boot). Los controladores manejan exclusivamente el protocolo HTTP, mientras que los servicios encapsulan la lógica de negocio pura. Esto facilita el testing unitario y el futuro reemplazo del mock por un ORM real.
+2. **Manejo de Errores Centralizado:** Se implementó un middleware en Express (errorHandler) que intercepta todas las excepciones. Distingue entre errores operativos (ej. "Stock insuficiente" -> 400 Bad Request) y errores no controlados (-> 500 Internal Server Error), estandarizando la respuesta JSON para el frontend.
+3. **Modelado de Datos y Escalabilidad (PostgreSQL):**
+   - Esquema en 3NF con UUIDs: Tablas transaccionales usan UUID v4 previendo escalabilidad horizontal (sharding) sin colisión de IDs.
+   - Prevención N a N: Para mantener integridad 1:N actual y prever requerimientos futuros (ej. un producto en múltiples categorías), se documenta el uso de tipos nativos ARRAY (category_ids INTEGER[]) o JSONB de Postgres, evitando costosas tablas intermedias.
+   - Concurrencia e Integridad (ACID): El registro de movimientos se procesa atómicamente. Dado que operadores humanos actúan simultáneamente, el diseño asume delegar la concurrencia a la base de datos mediante bloqueos a nivel de fila (Row-level locks) o restas relativas (UPDATE products SET stock = stock - X WHERE stock >= X), previniendo condiciones de carrera. Durante esta prueba, se simula este comportamiento en memoria.
+
+## 🗄️ Modelo de Datos (PostgreSQL)
+
+El sistema utiliza el siguiente esquema relacional, preparado para trazabilidad de usuarios:
+
+- **users**:
+  - id (UUID PK)
+  - username (UNIQUE)
+  - role (ENUM: ADMIN, OPERATOR)
+  - active (BOOLEAN).
+- **categories**:
+  - id (SERIAL PK)
+  - name (UNIQUE).
+- **products**:
+  - id (UUID PK)
+  - sku (UNIQUE)
+  - name
+  - category_id (FK a categories)
+  - price
+  - current_stock
+  - min_stock
+  - created_at
+  - updated_at.
+- **inventory_movements (Tabla de Auditoría)**:
+  - id (UUID PK)
+  - product_id (FK a products)
+  - operator_id (FK a users) (Nuevo: Rastreo de autoría)
+  - type (ENUM: IN, OUT, ADJUSTMENT)
+  - quantity (INTEGER)
+  - reason (TEXT)
+  - created_at (TIMESTAMP)
+- **stock_alerts**:
+  - id (SERIAL PK)
+  - product_id (FK a products)
+  - stock_at_moment
+  - resolved (BOOLEAN)
+  - created_at.

@@ -1,0 +1,16 @@
+FROM node:18-alpine
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
+
+# Copiamos solo los archivos de dependencias primero (Optimización de caché de Docker)
+COPY package*.json ./
+
+# Instalamos dependencias
+RUN npm install
+
+# Copiamos el resto del código
+COPY . .
+
+# Exponemos el puerto
+EXPOSE 3000
