@@ -1,0 +1,18 @@
+// IA-CONSULTA: Ahora tengo este error con la importación de express: "SyntaxError: Cannot use import statement outside a module"
+// IA-SUGERENCIA: El error indica que Node.js no reconoce la sintaxis de ES Modules (import). Al observar el árbol de directorios, falta el archivo `tsconfig.json`. Se debe crear este archivo habilitando `esModuleInterop: true` y estableciendo el `module` en `commonjs` para que ts-node transpile correctamente las importaciones.
+// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",             /* Traduce los 'import' a 'require' para Node.js */
+    "rootDir": "./src",               /* Donde está nuestro código fuente */
+    "outDir": "./dist",               /* Donde se guardará el código compilado para producción */
+    "esModuleInterop": true,          /* ¡MAGIA! Permite importar librerías JS antiguas en TS (import express from 'express') */
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,                   /* Activa todas las validaciones estrictas de tipado */
+    "skipLibCheck": true              /* Acelera la compilación ignorando los tipos de la carpeta node_modules */
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
