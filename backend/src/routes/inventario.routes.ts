@@ -13,9 +13,9 @@ const controller = new InventoryController();
 // Nota: Solo pasamos la *referencia* a la función (controller.getProducts), no la ejecutamos ().
 // Express se encargará de ejecutarla y pasarle los parámetros (req, res, next) cuando llegue una petición.
 
-router.get('/products', controller.getProducts);
-router.get('/alerts', controller.getActiveAlerts);
-router.post('/products/:id/movements', controller.registerMovement);
+router.get('/productos', controller.getProducts);
+router.get('/alertas', controller.getActiveAlerts);
+router.post('/productos/:id/movimientos', controller.registerMovement);
 
 // Exportamos el enrutador para conectarlo en nuestro archivo principal (index.ts)
 export default router;
