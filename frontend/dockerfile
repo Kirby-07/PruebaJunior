@@ -1,0 +1,21 @@
+# // IA-CONSULTA: Dame el dockerfile para el frontend
+# // IA-SUGERENCIA: Crear un Dockerfile basado en Node Alpine para el entorno de desarrollo de Angular. Se expone el puerto 4200.
+# // IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+
+FROM node:24
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
+
+# Copiamos los archivos de dependencias primero para aprovechar el caché de Docker
+COPY package*.json ./
+
+# Instalamos las dependencias locales y el CLI de Angular globalmente
+RUN npm install
+RUN npm install -g @angular/cli
+
+# Copiamos el resto del código fuente
+COPY . .
+
+# Exponemos el puerto estándar de Angular
+EXPOSE 4200

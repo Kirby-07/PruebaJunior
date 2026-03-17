@@ -1,0 +1,120 @@
+<!-- 
+// IA-CONSULTA: Sigamos con el HTML del dashboard
+// IA-SUGERENCIA: Implementar la vista HTML dividida en 3 secciones claras: Alertas Críticas (usando *ngIf), Formulario Reactivo (con [formGroup]), y Tabla de Inventario (con *ngFor y clases dinámicas [class.low-stock]). Incorporar el pipe personalizado para dar formato a datos, y mostrar estados de Loading/Error para cumplir los requisitos visuales.
+// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+-->
+
+<div class="dashboard-container">
+  
+  <header>
+    <h1>📦 Dashboard de Inventario E-Commerce</h1>
+  </header>
+
+  <!-- SECCIÓN 1: ESTADOS GLOBALES (Loading, Errores, Éxito) -->
+  <!-- *ngIf evalúa la variable booleana de nuestro TypeScript. Si es true, el <div> existe; si no, Angular lo borra del DOM. -->
+  <div *ngIf="isLoading" class="alert info">Cargando datos desde el servidor... ⏳</div>
+  <div *ngIf="errorMessage" class="alert error">❌ {{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert success">✅ {{ successMessage }}</div>
+
+  <!-- SECCIÓN 2: ALERTAS CRÍTICAS -->
+  <!-- Si el arreglo 'alerts' tiene elementos (>0), mostramos esta caja roja -->
+  <section class="alerts-section" *ngIf="alerts.length > 0">
+    <h2>⚠️ Alertas de Stock Crítico</h2>
+    <ul>
+      <li *ngFor="let alert of alerts">
+        <!-- Usamos interpolación {{ }} para imprimir variables -->
+        El producto <strong>{{ alert.product_name }}</strong> (SKU: {{ alert.sku }}) tiene solo {{ alert.stock_at_moment }} unidades.
+      </li>
+    </ul>
+  </section>
+
+  <div class="main-content">
+    
+    <!-- SECCIÓN 3: FORMULARIO DE MOVIMIENTOS -->
+    <!-- [formGroup] conecta este <form> HTML con la variable 'movementForm' que creamos con FormBuilder en TypeScript -->
+    <!-- (ngSubmit) es el evento de Angular que escucha el 'submit' y llama a nuestra función onSubmitMovement() -->
+    <section class="form-section">
+      <h2>Registrar Movimiento</h2>
+      <form [formGroup]="movementForm" (ngSubmit)="onSubmitMovement()">
+        
+        <div class="form-group">
+          <label>Producto:</label>
+          <!-- formControlName enlaza este <select> con el campo 'productId' de nuestro FormGroup -->
+          <select formControlName="productId">
+            <option value="">-- Seleccione un producto --</option>
+            <option *ngFor="let product of products" [value]="product.id">
+              {{ product.name }} (Stock: {{ product.current_stock }})
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group row">
+          <div class="col">
+            <label>Tipo de Movimiento:</label>
+            <select formControlName="type">
+              <!-- Aquí vemos nuestro PIPE en acción. 'IN' | movementType => 'Entrada 🟢' -->
+              <option value="IN">{{ 'IN' | movementType }}</option>
+              <option value="OUT">{{ 'OUT' | movementType }}</option>
+              <option value="ADJUSTMENT">{{ 'ADJUSTMENT' | movementType }}</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Cantidad:</label>
+            <input type="number" formControlName="quantity" min="1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Motivo (Opcional):</label>
+          <input type="text" formControlName="reason" placeholder="Ej: Reabastecimiento mensual">
+        </div>
+
+        <!-- [disabled] desactiva el botón si el formulario es inválido o si estamos cargando datos -->
+        <button type="submit" [disabled]="movementForm.invalid || isLoading">
+          Guardar Movimiento
+        </button>
+      </form>
+    </section>
+
+    <!-- SECCIÓN 4: TABLA DE INVENTARIO -->
+    <section class="table-section">
+      <div class="table-header">
+        <h2>Catálogo Actual</h2>
+        <!-- (click) ejecuta nuestra función toggleLowStock() -->
+        <!-- [class.active] añade la clase CSS 'active' dinámicamente si showLowStockOnly es true -->
+        <button type="button" class="btn-filter" [class.active]="showLowStockOnly" (click)="toggleLowStock()">
+          {{ showLowStockOnly ? 'Mostrando solo críticos' : 'Filtrar bajo mínimo' }}
+        </button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock Actual</th>
+            <th>Mínimo Permitido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- *ngFor recorre la lista de productos y crea un <tr> por cada uno -->
+          <!-- [class.danger] le pone fondo rojo a la fila si el stock actual es menor al mínimo -->
+          <tr *ngFor="let product of products" [class.danger]="product.current_stock < product.min_stock">
+            <td><strong>{{ product.sku }}</strong></td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category_id === 1 ? 'Electrónica' : 'Mobiliario' }}</td>
+            <!-- El pipe 'currency' viene incluido en Angular para formatear números como dinero -->
+            <td>{{ product.price | currency:'USD' }}</td>
+            <td class="text-center font-bold" [class.text-red]="product.current_stock < product.min_stock">
+              {{ product.current_stock }}
+            </td>
+            <td class="text-center">{{ product.min_stock }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+</div>

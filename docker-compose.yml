@@ -12,3 +12,16 @@ services:
       - PORT=3000
       - NODE_ENV=development
     command: npm run dev
+ 
+  frontend:
+    build: 
+      context: ./frontend
+    container_name: inventario-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    command: node_modules/.bin/ng serve --host 0.0.0.0 --poll 2000
