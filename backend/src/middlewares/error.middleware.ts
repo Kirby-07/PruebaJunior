@@ -1,7 +1,6 @@
 // IA-CONSULTA: Pregunte como implementar middleware de errores en Express con TypeScript.
 // IA-SUGERENCIA: Uso de NextFunction con parametro error tipado como unknown.
-// IA-DECISION: Adapte la sugerencia separando errores operacionales de errores de programacion,
-//              agregue logging y estandarice el formato de respuesta de error.
+// IA-DECISION: El middleware propuesto y construido con base a IA cumple con los requerimientos solicitados, se dejan comentarios para futuras referencias y facilidad de comprension.
 
 import { Request, Response, NextFunction } from 'express';
 import { OperationalError } from '../services/inventario.service';

@@ -1,6 +1,6 @@
-// IA-CONSULTA: 
+// IA-CONSULTA: Podrías darme una propuesta de controladores para manejar las peticiones HTTP del backend
 // IA-SUGERENCIA: Crear el `InventoryController` para manejar las peticiones HTTP (GET productos, POST movimiento, GET alertas). Utilizar los tipos `Request`, `Response` y `NextFunction` de Express. Implementar un bloque try-catch para derivar los errores al middleware centralizado usando `next(error)`.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: Se toma la clase generada por la IA ya que cumple con los requerimientos solicitados.
 
 import { Request, Response, NextFunction } from 'express';
 import { InventoryService, RegisterMovementDto } from '../services/inventario.service';

@@ -1,6 +1,6 @@
-// IA-CONSULTA: 
+// IA-CONSULTA: Podrías darme un punto de vista de como estructurar el backend.
 // IA-SUGERENCIA: Configurar la aplicación Express en `index.ts`. Incluir middlewares globales como CORS y parseo de JSON. Montar las rutas del inventario bajo un prefijo como `/api`. Es vital que el `errorHandler` se monte al final, después de todas las rutas, para que pueda interceptar cualquier error lanzado mediante `next(error)`.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: La estructura propuesta y construida con base a IA cumple con los requerimientos solicitados, se dejan comentarios para futuras referencias y facilidad de comprension.
 
 import express from 'express';
 import cors from 'cors';
@@ -44,8 +44,8 @@ app.use(errorHandler);
 // 4. Inicialización del Servidor
 // ==========================================
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor Backend ejecutándose en http://localhost:${PORT}`);
-    console.log(`📦 Rutas habilitadas:`);
+    console.log(`Servidor Backend ejecutándose en http://localhost:${PORT}`);
+    console.log(`Rutas habilitadas:`);
     console.log(`   - GET  /api/productos`);
     console.log(`   - GET  /api/alertas`);
     console.log(`   - POST /api/productos/:id/movimientos`);

@@ -4,3 +4,9 @@ frontend/node_modules
 frontend/.vscode
 frontend/package-lock.json
 frontend/.gitignore
+frontend/.angular   
+frontend/readme.md
+frontend/.dockerignore
+.gitignore
+.dockerignore
+frontend

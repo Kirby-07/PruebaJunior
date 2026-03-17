@@ -1,6 +1,6 @@
 // IA-CONSULTA: ¿Cómo conecto los métodos del controlador a las rutas HTTP reales en Express?
 // IA-SUGERENCIA: Utilizar `Router` de Express para crear un módulo de rutas. Instanciar `InventoryController` y mapear los verbos HTTP (GET, POST) y las URLs a los métodos específicos de la clase controladora.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: El enrutador propuesto y construido con base a IA cumple con los requerimientos solicitados, se dejan comentarios para futuras referencias y facilidad de comprension, al funcionar similar a Java con spring determino que la solucion cumple con las necesidades.
 
 import { Router } from 'express';
 import { InventoryController } from '../controllers/inventario.controller';

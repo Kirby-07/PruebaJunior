@@ -1,6 +1,6 @@
-// IA-CONSULTA: Ya hice el primer commit, cómo puedo avanzar?
+// IA-CONSULTA: Podrías darme un punto de vista de una logica de negocio para el ejercicio propuesto.
 // IA-SUGERENCIA: Propongo implementar la lógica de negocio principal en `InventoryService` añadiendo el método `registerMovement`. Este método validará la existencia del producto, gestionará el stock para entradas/salidas/ajustes, creará un registro de auditoría, y manejará las alertas de stock bajo. Se crea una clase `OperationalError` para un manejo de errores más limpio.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: La logica de negocio propuesta y construida con base a IA cumple con los requerimientos solicitados, se dejan comentarios para futuras referencias y facilidad de comprension.
 
 //Similar a la notacion @Service de springboot, esto funciona para identificar que esta clase es el servicio
 
