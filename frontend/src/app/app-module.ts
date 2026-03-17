@@ -1,6 +1,6 @@
-// IA-CONSULTA: Corregir el AppModule porque quedó una importación basura de 'App' y el árbol de archivos se ve anidado.
+// IA-CONSULTA: Ayudame a importar los modulos necesarios para la inicializacion de angular
 // IA-SUGERENCIA: Limpiar el `app.module.ts` eliminando las referencias a `App` y manteniendo únicamente `AppComponent`.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: Se importan los modulos pero incorrectamente ya que no usaba el nombre de app.ts, se corrige y se implementa.
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';

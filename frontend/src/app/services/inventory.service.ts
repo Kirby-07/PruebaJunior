@@ -1,6 +1,7 @@
 // IA-CONSULTA: ¿Cómo creo el servicio `InventoryService` en Angular para consumir mi API de Node.js?
 // IA-SUGERENCIA: Inyectar `HttpClient` en el constructor del servicio. Definir métodos para GET, POST, y consultar alertas. Usar Observables (el estándar en Angular) para manejar las respuestas de forma asíncrona.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: Se deja la implementacion de la IA puesto que cumple con los requisitos aunque considero que puede hacerse mas modular 
+// En java esto lo haria con 2 archivos 1 siendo el repositorio donde esta toda la logica y el servicio que es la inyeccion de las dependencias por constructor, que creeria que aca es similar
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

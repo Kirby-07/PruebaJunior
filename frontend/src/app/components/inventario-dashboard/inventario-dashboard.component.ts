@@ -1,6 +1,6 @@
 // IA-CONSULTA: ¿Cómo implemento la lógica del InventoryDashboardComponent usando ReactiveFormsModule y el servicio creado, cumpliendo con los filtros y manejo de estados?
 // IA-SUGERENCIA: Inyectar `InventoryService` y `FormBuilder`. Crear un `FormGroup` con validadores sincrónicos. Usar `subscribe` para manejar las peticiones HTTP y controlar variables de estado (loading, error, success) para dar feedback visual al usuario.
-// IA-DECISION: [DECISIÓN DEL DESARROLLADOR: ]
+// IA-DECISION: Se deja la solucion propuesta por la IA puesto que cumple con los requerimientos pero mi falta de conocimiento en Angular no sabria decir si esta optimizado, creeria que si porque al momento de recargar se demora y aca es donde inyectan y tendria que revisar como optimizar
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
